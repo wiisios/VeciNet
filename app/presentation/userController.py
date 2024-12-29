@@ -25,7 +25,7 @@ async def updateUser(userId: int, userData: UserBase, userService: UserService =
         updated_user = await userService.updateUser(userId, userData)
         if not updated_user:
             raise HTTPException(status_code=404, detail="User not found")
-        return MessageResponse(msg="Usuario actualizado con éxito")
+        return MessageResponse(msg="User updated successfully")
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:

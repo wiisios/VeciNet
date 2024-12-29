@@ -1,1 +1,2 @@
 from .userRepository import UserRepository
+from .buildingRepository import BuildingRepository

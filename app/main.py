@@ -4,6 +4,7 @@ from sqlmodel import SQLModel
 from app.presistence.models import Building, Expense_User, Expense, ExpenseItem, Flat, Property, User
 from .config import createDbAndTables
 from app.presentation.userController import router as userRouter
+from app.presentation.buildingController import router as buildingRouter
 
 def lifespan(app: FastAPI):
     print("Starting Vecinet")
@@ -13,5 +14,6 @@ def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-app.include_router(userRouter)
+app.include_router(userRouter, prefix="/users", tags=["Users"])
+app.include_router(buildingRouter, prefix="/buildings", tags=["Buildings"])
 
