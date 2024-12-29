@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
-from app.application.userService import UserService
-from app.domain.userDto import UserCreate, UserResponse, UserBase
-from app.domain.messages import MessageResponse
+from app.application import UserService
+from app.domain import UserCreate, UserResponse, UserBase, MessageResponse
 
 router = APIRouter()
 

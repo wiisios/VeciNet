@@ -1,8 +1,8 @@
 from fastapi import Depends
 from sqlmodel import Session
 
-from app.presistence.repositories.buildingRepository import BuildingRepository
-from app.config.database import getDb
+from app.presistence.repositories import BuildingRepository
+from app.config import getDb
 from app.domain import BuildingResponse, BuildingBase
 
 
@@ -16,7 +16,6 @@ class BuildingService:
     
     async def readBuilding(self, buildingId: int) -> BuildingResponse:
         building = self.buildingRepository.getById(buildingId)
-        print(building)
         if building:
             building_dict = {
                 "id": building.id,

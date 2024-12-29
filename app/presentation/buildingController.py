@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
-from app.application.buildingService import BuildingService
-from app.domain.buildingDto import BuildingResponse, BuildingBase
-from app.domain.messages import MessageResponse
+from app.application import BuildingService
+from app.domain import BuildingResponse, BuildingBase, MessageResponse
 
 router = APIRouter()
 

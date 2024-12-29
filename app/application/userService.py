@@ -1,8 +1,8 @@
 from fastapi import Depends
 from sqlmodel import Session
 
-from app.presistence.repositories.userRepository import UserRepository
-from app.config.database import getDb
+from app.presistence.repositories import UserRepository
+from app.config import getDb
 from app.domain import UserCreate, UserResponse, UserBase
 
 
@@ -16,7 +16,6 @@ class UserService:
     
     async def readUser(self, userId: int) -> UserResponse:
         user = self.userRepository.getById(userId)
-        print(user)
         if user:
             user_dict = {
                 "id": user.id,

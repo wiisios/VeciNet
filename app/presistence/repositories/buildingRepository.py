@@ -1,5 +1,5 @@
 from sqlmodel import Session, select
-from app.domain.buildingDto import BuildingBase
+from app.domain import BuildingBase
 from app.presistence.models import Building
 
 
@@ -23,7 +23,6 @@ class BuildingRepository:
     def getById(self, buildingId: int) -> Building:
         statement = select(Building).where(Building.id == buildingId)
         result = self.db.exec(statement).first()
-        print(result)
         if result is None:
             raise ValueError(f"Building with id {buildingId} not found.")
         return result
