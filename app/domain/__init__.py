@@ -1,1 +1,1 @@
-from .userDto import User, UserCreate, UserResponse
+from .userDto import UserBase, UserCreate, UserResponse

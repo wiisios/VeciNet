@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 
 from pathlib import Path
-env_path = Path('.') / '.env'
+env_path = Path('app.') / '.env'
 load_dotenv(dotenv_path=env_path)
 
 class Settings:
@@ -11,6 +11,6 @@ class Settings:
 
     MYSQL_USER: str = os.getenv("MYSQL_USER")
     MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
-    DATABASE_URL = f"mysql://{MYSQL_USER}:{MYSQL_PASSWORD}@autorack.proxy.rlwy.net:28455/railway"
+    DATABASE_URL = f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@autorack.proxy.rlwy.net:28455/railway"
 
 settings = Settings()

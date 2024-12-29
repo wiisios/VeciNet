@@ -6,6 +6,7 @@ from .expense_user import Expense_User
 if TYPE_CHECKING:
     from .expense import Expense
     from .flat import Flat
+    from .property import Property
 
 class User(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
@@ -17,10 +18,8 @@ class User(SQLModel, table=True):
     isRealEstate: bool = Field(default=False)
     title: str | None = Field(default=None)
 
-    flatId: int | None = Field(default=None, foreign_key="flat.id")
-    flatOwner: List["Flat"] = Relationship(back_populates="owner")
-
-    flatTenantId: int | None = Field(default=None, foreign_key="flat.id")
+    properties: List["Property"] = Relationship(back_populates="owner")
+    flatTenant: List["Flat"] = Relationship(back_populates="tenant")
 
     expenses: List["Expense"] = Relationship(back_populates="users", link_model=Expense_User)
 
