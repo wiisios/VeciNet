@@ -2,23 +2,26 @@ from fastapi import APIRouter, Depends, HTTPException
 from app.application import BuildingService
 from app.domain import BuildingResponse, BuildingBase, MessageResponse
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/buildings", 
+    tags=["Buildings"]
+    )
 
-@router.post("/buildings/", response_model=BuildingResponse)
+@router.post("/", response_model=BuildingResponse)
 async def createBuilding(buildingData: BuildingBase, buildingService: BuildingService = Depends()):
     try:
         return await buildingService.createBuilding(buildingData)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@router.get("/buildings/{buildingId}", response_model=BuildingResponse)
+@router.get("/{buildingId}", response_model=BuildingResponse)
 async def getBuildingById(buildingId: int, buildingService: BuildingService = Depends()):
     building = await buildingService.readBuilding(buildingId)
     if not building:
         raise HTTPException(status_code=404, detail="Building not found")
     return building
 
-@router.put("/buildings/{building_id}", response_model=MessageResponse)
+@router.put("/{building_id}", response_model=MessageResponse)
 async def updateBuilding(buildingId: int, buildingData: BuildingBase, buildingService: BuildingService = Depends()):
     try:
         updated_building = await buildingService.updateBuilding(buildingId, buildingData)
@@ -30,7 +33,7 @@ async def updateBuilding(buildingId: int, buildingData: BuildingBase, buildingSe
     except Exception as e:
         raise HTTPException(status_code=500, detail="Error updating building")
 
-@router.delete("/buildings/{buildingId}", response_model=MessageResponse)
+@router.delete("/{buildingId}", response_model=MessageResponse)
 async def delete_building(buildingId: int, buildingService: BuildingService = Depends()):
     
     try:

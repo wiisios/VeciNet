@@ -2,9 +2,12 @@ from fastapi import APIRouter, Depends, HTTPException
 from app.application import FlatService
 from app.domain import FlatCreate, FlatResponse, FlatBase, FlatCreateDiffOwner, MessageResponse
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/flats", 
+    tags=["Flats"]
+)
 
-@router.post("/flats/asRealEstate", response_model=FlatResponse)
+@router.post("/asRealEstate", response_model=FlatResponse)
 async def createFlat(flatData: FlatCreate, flatService: FlatService = Depends()):
     realEstateId: int = 2 # Use JWT to get the id
     try:
@@ -12,21 +15,21 @@ async def createFlat(flatData: FlatCreate, flatService: FlatService = Depends())
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
     
-@router.post("/flats/forDiffOwners", response_model=FlatResponse)
+@router.post("/forDiffOwners", response_model=FlatResponse)
 async def createFlatDiffOwner(flatData: FlatCreateDiffOwner, flatService: FlatService = Depends()):
     try:
         return await flatService.createFlatDiffOwner(flatData)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@router.get("/flats/{flatId}", response_model=FlatResponse)
+@router.get("/{flatId}", response_model=FlatResponse)
 async def getFlatById(flatId: int, flatService: FlatService = Depends()):
     flat = await flatService.readFlat(flatId)
     if not flat:
         raise HTTPException(status_code=404, detail="Flat not found")
     return flat
 
-@router.put("/flats/{flat_id}", response_model=MessageResponse)
+@router.put("/{flat_id}", response_model=MessageResponse)
 async def updateFlat(flatId: int, flatData: FlatBase, flatService: FlatService = Depends()):
     try:
         updated_flat = await flatService.updateFlat(flatId, flatData)
@@ -38,7 +41,7 @@ async def updateFlat(flatId: int, flatData: FlatBase, flatService: FlatService =
     except Exception as e:
         raise HTTPException(status_code=500, detail="Error updating flat")
 
-@router.delete("/flats/{flatId}", response_model=MessageResponse)
+@router.delete("/{flatId}", response_model=MessageResponse)
 async def delete_flat(flatId: int, flatService: FlatService = Depends()):
     
     try:

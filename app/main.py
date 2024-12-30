@@ -6,6 +6,8 @@ from .config import createDbAndTables
 from app.presentation.userController import router as userRouter
 from app.presentation.buildingController import router as buildingRouter
 from app.presentation.flatController import router as flatRouter
+from app.presentation.expenseController import router as expenseRouter
+from app.presentation.expenseItemController import router as expenseItemRouter
 
 def lifespan(app: FastAPI):
     print("Starting Vecinet")
@@ -15,7 +17,9 @@ def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-app.include_router(userRouter, prefix="/users", tags=["Users"])
-app.include_router(buildingRouter, prefix="/buildings", tags=["Buildings"])
-app.include_router(flatRouter, prefix="/flats", tags=["Flats"])
+app.include_router(userRouter)
+app.include_router(buildingRouter)
+app.include_router(flatRouter)
+app.include_router(expenseRouter)
+app.include_router(expenseItemRouter)
 

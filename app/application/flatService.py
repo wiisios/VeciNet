@@ -19,7 +19,7 @@ class FlatService:
     
     async def createFlatDiffOwner(self, flatData: FlatCreateDiffOwner) -> FlatResponse:
         flat = self.flatRepository.addFlat(flatData)
-        user = self.userRepository.getByNameAndLastName(flatData)
+        user = self.userRepository.getByNameAndLastNameForFlat(flatData)
         self.propertyRepository.addProperty(user.id, flat)
         if flat:
             flat_dict = {

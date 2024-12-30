@@ -1,5 +1,5 @@
 from sqlmodel import Session, select
-from app.domain import UserBase, UserCreate, FlatCreateDiffOwner
+from app.domain import UserBase, UserCreate, FlatCreateDiffOwner, ExpenseCreate
 from app.presistence.models import User
 
 
@@ -26,13 +26,22 @@ class UserRepository:
             raise ValueError(f"User with id {userId} not found.")
         return result
     
-    def getByNameAndLastName(self, user: FlatCreateDiffOwner) -> User:
+    def getByNameAndLastNameForFlat(self, user: FlatCreateDiffOwner) -> User:
         statement = select(User).where(
             (User.name == user.ownerName) &
             (User.lastName == user.ownerLastName))
         result = self.db.exec(statement).first()
         if result is None:
             raise ValueError(f"User with name {user.ownerName} and {user.ownerLastName} not found")
+        return result
+    
+    def getByNameAndLastNameForExpense(self, user: ExpenseCreate) -> User:
+        statement = select(User).where(
+            (User.name == user.tenantName) &
+            (User.lastName == user.tenantLastName))
+        result = self.db.exec(statement).first()
+        if result is None:
+            raise ValueError(f"User with name {user.tenantName} and {user.tenantLastName} not found")
         return result
     
     def updateUser(self, user: UserBase) -> None:

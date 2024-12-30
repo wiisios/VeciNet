@@ -6,6 +6,7 @@ if TYPE_CHECKING:
 
 class ExpenseItem(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
+    reason: str
     description: str
     cost: float
     invoiceImg: str
