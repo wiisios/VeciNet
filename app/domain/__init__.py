@@ -1,4 +1,4 @@
-from .userDto import UserBase, UserCreate, UserResponse
+from .userDto import UserBase, UserCreate, UserResponse, UserLogin
 from .buildingDto import BuildingBase, BuildingResponse
 from .messages import MessageResponse
 from .flatDto import FlatBase, FlatCreate, FlatResponse, FlatCreateDiffOwner

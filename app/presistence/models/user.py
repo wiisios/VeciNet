@@ -14,9 +14,7 @@ class User(SQLModel, table=True):
     lastName: str = Field(index=True)
     password: str
     email: EmailStr = Field(index=True)
-    isOwner: bool = Field(default=False)
-    isRealEstate: bool = Field(default=False)
-    title: str | None = Field(default=None)
+    role: str = Field(default="tenant")
 
     properties: List["Property"] = Relationship(back_populates="owner")
     flatTenant: List["Flat"] = Relationship(back_populates="tenant")

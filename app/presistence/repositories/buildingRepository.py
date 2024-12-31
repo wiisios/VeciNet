@@ -1,3 +1,4 @@
+from typing import List
 from sqlmodel import Session, select
 from app.domain import BuildingBase
 from app.presistence.models import Building
@@ -19,6 +20,11 @@ class BuildingRepository:
         self.db.commit()
         self.db.refresh(building)
         return building
+    
+    def getAll(self) -> List[Building]:
+        statement = select(Building)
+        result = self.db.exec(statement).all()
+        return result
     
     def getById(self, buildingId: int) -> Building:
         statement = select(Building).where(Building.id == buildingId)

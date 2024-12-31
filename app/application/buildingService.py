@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import Depends
 from sqlmodel import Session
 
@@ -14,19 +15,13 @@ class BuildingService:
         building = self.buildingRepository.addBuilding(buildingData)
         return BuildingResponse.model_validate(building.__dict__)
     
+    async def readAllBuildings(self) -> List[BuildingResponse]:
+        buildings = self.buildingRepository.getAll()
+        return [BuildingResponse.model_validate(building.__dict__) for building in buildings]
+    
     async def readBuilding(self, buildingId: int) -> BuildingResponse:
         building = self.buildingRepository.getById(buildingId)
-        if building:
-            building_dict = {
-                "id": building.id,
-                "name": building.name,
-                "street": building.street,
-                "city": building.city,
-                "zipCode": building.zipCode,
-                "flatAmount": building.flatAmount
-            }
-            return BuildingResponse.model_validate(building_dict)
-        return None
+        return BuildingResponse.model_validate(building.__dict__)
     
     async def updateBuilding(self, buildingId: int, buildingData: BuildingBase) -> BuildingResponse:
         building = self.buildingRepository.getById(buildingId)

@@ -1,1 +1,1 @@
-from .helpers import Helpers
+from .helpers import Helpers, hash_password, verify_password

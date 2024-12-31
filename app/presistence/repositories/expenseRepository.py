@@ -20,6 +20,11 @@ class ExpenseRepository:
         self.db.refresh(expense)
         return expense
     
+    def getAll(self) -> List[Expense]:
+        statement = select(Expense)
+        result = self.db.exec(statement).all()
+        return result
+    
     def getById(self, expenseId: int) -> Expense:
         statement = select(Expense).where(Expense.id == expenseId)
         result = self.db.exec(statement).first()

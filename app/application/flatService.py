@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import Depends
 from sqlmodel import Session
 
@@ -21,23 +22,15 @@ class FlatService:
         flat = self.flatRepository.addFlat(flatData)
         user = self.userRepository.getByNameAndLastNameForFlat(flatData)
         self.propertyRepository.addProperty(user.id, flat)
-        if flat:
-            flat_dict = {
-                "id": flat.id,
-                "number": flat.number,
-            }
-            return FlatResponse.model_validate(flat_dict)
-        return None
+        return FlatResponse.model_validate(flat.__dict__)
+    
+    async def readAllFlats(self) -> List[FlatResponse]:
+        flats = self.flatRepository.getAll()
+        return [FlatResponse.model_validate(flat.__dict__) for flat in flats]
     
     async def readFlat(self, flatId: int) -> FlatResponse:
         flat = self.flatRepository.getById(flatId)
-        if flat:
-            flat_dict = {
-                "id": flat.id,
-                "number": flat.number,
-            }
-            return FlatResponse.model_validate(flat_dict)
-        return None
+        return FlatResponse.model_validate(flat.__dict__)
     
     async def updateFlat(self, flatId: int, flatData: FlatBase) -> FlatResponse:
         flat = self.flatRepository.getById(flatId)

@@ -1,3 +1,4 @@
+from typing import List
 from sqlmodel import Session, select
 from app.domain import ExpenseItemBase
 from app.presistence.models import ExpenseItem
@@ -17,6 +18,11 @@ class ExpenseItemRepository:
         self.db.commit()
         self.db.refresh(expenseItem)
         return expenseItem
+    
+    def getAll(self) -> List[ExpenseItem]:
+        statement = select(ExpenseItem)
+        result = self.db.exec(statement).all()
+        return result
     
     def getById(self, expenseItemId: int) -> ExpenseItem:
         statement = select(ExpenseItem).where(ExpenseItem.id == expenseItemId)

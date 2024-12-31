@@ -1,3 +1,4 @@
+from typing import List
 from sqlmodel import Session, select
 from app.domain import FlatBase, FlatCreate
 from app.presistence.models import Flat
@@ -17,6 +18,11 @@ class FlatRepository:
         self.db.commit()
         self.db.refresh(flat)
         return flat
+    
+    def getAll(self) -> List[Flat]:
+        statement = select(Flat)
+        result = self.db.exec(statement).all()
+        return result
     
     def getById(self, flatId: int) -> Flat:
         statement = select(Flat).where(Flat.id == flatId)

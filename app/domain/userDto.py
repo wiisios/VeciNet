@@ -6,11 +6,16 @@ class UserBase(BaseModel):
     lastName: str
     email: EmailStr
 
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
 class UserCreate(UserBase):
     password: str
 
-class UserResponse(UserBase):
+class UserResponse(UserBase):   
     id: int
+    role: str
     
     class Config:
         model_config ={

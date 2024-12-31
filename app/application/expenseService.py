@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import Depends
 from sqlmodel import Session
 
@@ -20,27 +21,15 @@ class ExpenseService:
         expense = self.expenseRepository.addExpense(expenseData, items)
         user = self.userRepository.getByNameAndLastNameForExpense(expenseData)
         self.expense_userRepository.addExpense_User(user.id, expense)
-        if expense:
-            expense_dict = {
-                "id": expense.id,
-                "date": expense.date,
-                "totalCost": expense.totalCost,
-                "items": expense.items
-            }
-            return ExpenseResponse.model_validate(expense_dict)
-        return None
+        return ExpenseResponse.model_validate(expense.__dict__)
+    
+    async def readAllExpenses(self) -> List[ExpenseResponse]:
+        expenses = self.expenseRepository.getAll()
+        return [ExpenseResponse.model_validate(expense.__dict__) for expense in expenses]
     
     async def readExpense(self, expenseId: int) -> ExpenseResponse:
         expense = self.expenseRepository.getById(expenseId)
-        if expense:
-            expense_dict = {
-                "id": expense.id,
-                "date": expense.date,
-                "totalCost": expense.totalCost,
-                "items": expense.items,
-            }
-            return ExpenseResponse.model_validate(expense_dict)
-        return None
+        return ExpenseResponse.model_validate(expense.__dict__)
     
     async def updateExpense(self, expenseId: int, expenseData: ExpenseBase) -> ExpenseResponse:
         expense = self.expenseRepository.getById(expenseId)

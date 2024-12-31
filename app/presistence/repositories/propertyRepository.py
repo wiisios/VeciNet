@@ -1,3 +1,4 @@
+from typing import List
 from sqlmodel import Session, select
 from app.domain import PropertyBase
 from app.presistence.models import Property, Flat
@@ -16,6 +17,11 @@ class PropertyRepository:
         self.db.commit()
         self.db.refresh(property)
         return property
+    
+    def getAll(self) -> List[Property]:
+        statement = select(Property)
+        result = self.db.exec(statement).all()
+        return result
     
     def getById(self, propertyId: int) -> Property:
         statement = select(Property).where(Property.id == propertyId)
