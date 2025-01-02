@@ -17,19 +17,19 @@ Error handling based on RFC 9457.
 ## Project Structure
 The project follows a layered architecture (controllers, services, repositories), with clear responsibility management and validations:
 
-src/
-├── alembic/
-├── app/
-│   ├── application/
-│   ├── config/
-│   ├── domain/
-│   ├── persistence/
-│   │   ├──models/
-│   │   └──repositories/
-│   ├── presentation/
-│   └── security/
-├── helpers.py
-└── main.py
+graph TD
+  A[src] --> B[alembic]
+  A --> C[app]
+  A --> D[helpers.py]
+  A --> E[main.py]
+  C --> F[application]
+  C --> G[config]
+  C --> H[domain]
+  C --> I[persistence]
+  C --> J[presentation]
+  C --> K[security]
+  I --> L[models]
+  I --> M[repositories]
 
 ## Main Components
 - Controllers: Handle routes and HTTP responses.
@@ -41,6 +41,7 @@ src/
 
 Below is the database diagram using Mermaid, representing the main entities and their relationships.
 
+```mermaid
 erDiagram
     USER {
         int id PK
@@ -95,6 +96,7 @@ erDiagram
     EXPENSE ||--o| EXPENSEUSER : is_associated_with
     FLAT ||--|| PROPERTY : is_property_of
     BUILDING ||--o| FLAT : contains
+```
 
 ### Description of the elements:
 - **USER**: Represents users in the system, with fields like id, name, last_name, email, password, and role.
