@@ -17,6 +17,7 @@ Error handling based on RFC 9457.
 ## Project Structure
 The project follows a layered architecture (controllers, services, repositories), with clear responsibility management and validations:
 
+```mermaid
 graph TD
   A[src] --> B[alembic]
   A --> C[app]
@@ -30,6 +31,7 @@ graph TD
   C --> K[security]
   I --> L[models]
   I --> M[repositories]
+```
 
 ## Main Components
 - Controllers: Handle routes and HTTP responses.
