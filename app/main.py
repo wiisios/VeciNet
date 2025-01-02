@@ -1,22 +1,23 @@
 from fastapi import FastAPI
 from sqlmodel import SQLModel
 
-from app.presistence.models import Building, Expense_User, Expense, ExpenseItem, Flat, Property, User
-from .config import createDbAndTables
-from app.presentation.userController import router as userRouter
-from app.presentation.buildingController import router as buildingRouter
-from app.presentation.flatController import router as flatRouter
-from app.presentation.expenseController import router as expenseRouter
-from app.presentation.expenseItemController import router as expenseItemRouter
+from app.persistence.models import Building, ExpenseUser, Expense, ExpenseItem, Flat, Property, User
+from .config import create_db_and_tables
+from app.presentation.user_controller import router as userRouter
+from app.presentation.building_controller import router as buildingRouter
+from app.presentation.flat_controller import router as flatRouter
+from app.presentation.expense_controller import router as expenseRouter
+from app.presentation.expense_item_controller import router as expenseItemRouter
 
 def lifespan(app: FastAPI):
     print("Starting Vecinet")
-    createDbAndTables()
+    create_db_and_tables()
     yield
     print("Shuting down Vecinet")
 
 app = FastAPI(lifespan=lifespan)
 
+# List of routers
 app.include_router(userRouter)
 app.include_router(buildingRouter)
 app.include_router(flatRouter)

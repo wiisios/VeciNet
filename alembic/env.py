@@ -5,13 +5,13 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from app.presistence.models.building import Building
-from app.presistence.models.expense_user import Expense_User
-from app.presistence.models.expense import Expense
-from app.presistence.models.expenseItem import ExpenseItem 
-from app.presistence.models.flat import Flat
-from app.presistence.models.property import Property
-from app.presistence.models.user import User
+from app.persistence.models.building import Building
+from app.persistence.models.expense_user import ExpenseUser
+from app.persistence.models.expense import Expense
+from app.persistence.models.expense_item import ExpenseItem 
+from app.persistence.models.flat import Flat
+from app.persistence.models.property import Property
+from app.persistence.models.user import User
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -28,7 +28,7 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 target_metadata = {
     Building.metadata,
-    Expense_User.metadata,
+    ExpenseUser.metadata,
     Expense.metadata,
     ExpenseItem.metadata,
     Flat.metadata,

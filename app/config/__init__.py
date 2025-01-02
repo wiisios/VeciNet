@@ -1,1 +1,1 @@
-from .database import getDb, engine, createDbAndTables
+from .database import get_db, engine, create_db_and_tables

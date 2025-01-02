@@ -11,6 +11,6 @@ class Settings:
 
     MYSQL_USER: str = os.getenv("MYSQL_USER")
     MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
-    DATABASE_URL = f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@autorack.proxy.rlwy.net:28455/railway"
+    DATABASE_URL = f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@junction.proxy.rlwy.net:29763/railway"
 
 settings = Settings()
